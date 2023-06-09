@@ -85,7 +85,10 @@ func FormatRunStatusCommentBody(tfc tfc_api.ApiClient, run *tfe.Run, rmd runstre
 
 	case tfe.RunPolicySoftFailed:
 		// no extra info
-		extraInfo = "The plan has soft failed policy checks, please open TFC URL to approve."
+		extraInfo = "The plan has soft failed policy checks. Please open TFC URL to approve."
+		if run.PlanOnly {
+			extraInfo = "The plan has soft failed policy checks. Please review the failures by opening TFC URL."
+		}
 
 	case tfe.RunPolicyChecked:
 		if !run.AutoApply {
